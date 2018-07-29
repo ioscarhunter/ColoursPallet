@@ -4,11 +4,13 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.graphics.Palette
+import android.view.View
+import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
     private val neutralTarget =
-            Target.Builder()
+            Palette.Target.Builder()
                     .setMinimumLightness(0.20f)
                     .setTargetLightness(0.5f)
                     .setMaximumLightness(0.8f)
@@ -37,5 +39,18 @@ class MainActivity : AppCompatActivity() {
                         body.setTextColor(swatch.bodyTextColor)
                     }
                 }
+    }
+
+    private fun setViewColour(swatch: Palette.Swatch?, background: View, titleTextView: TextView, bodyTextView: TextView) {
+        swatch?.apply {
+            background.setBackgroundColor(rgb)
+            titleTextView.setTextColor(titleTextColor)
+            bodyTextView.setTextColor(bodyTextColor)
+            bodyTextView.text = "Poppulation = $population"
+        } ?: let {
+            background.setBackgroundColor(resources.getColor(android.R.color.transparent))
+            titleTextView.setTextColor(resources.getColor(android.R.color.transparent))
+            bodyTextView.setTextColor(resources.getColor(android.R.color.transparent))
+        }
     }
 }
